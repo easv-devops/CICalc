@@ -1,0 +1,20 @@
+services:
+  calc-db-service:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: calcdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+  app:
+    build:
+      context: .
+      dockerfile: Console/Dockerfile
+    depends_on:
+      - calc-db-service
+
+volumes:
+  db_data:
